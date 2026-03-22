@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseMoveSpeed: 3
-  destroyX: -1
+  destroyX: -5
 --- !u!95 &2683390350106093377
 Animator:
   serializedVersion: 5
