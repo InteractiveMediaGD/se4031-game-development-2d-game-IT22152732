@@ -1,0 +1,25 @@
+using UnityEngine;
+
+public class ProjectileMovement : MonoBehaviour
+{
+    [SerializeField] private float moveSpeed = 8f;
+    [SerializeField] private float lifeTime = 2f;
+
+    private void Start()
+    {
+        Destroy(gameObject, lifeTime);
+    }
+
+    private void Update()
+    {
+        transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+    }
+}
