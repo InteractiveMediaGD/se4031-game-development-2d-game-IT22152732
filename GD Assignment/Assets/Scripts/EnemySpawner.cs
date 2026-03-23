@@ -6,7 +6,13 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnX = 10f;
     [SerializeField] private float minY = -3f;
     [SerializeField] private float maxY = 3f;
+
+    [Header("Spawn Settings")]
     [SerializeField] private float spawnInterval = 5f;
+
+    [Header("Difficulty Settings")]
+    [SerializeField] private float minSpawnInterval = 1f;
+    [SerializeField] private float difficultyIncreaseRate = 0.2f;
 
     private float timer = 0f;
 
@@ -19,6 +25,12 @@ public class EnemySpawner : MonoBehaviour
             SpawnEnemy();
             timer = 0f;
         }
+
+        // ?? Increase difficulty over time
+        if (spawnInterval > minSpawnInterval)
+        {
+            spawnInterval -= difficultyIncreaseRate * Time.deltaTime;
+        }
     }
 
     private void SpawnEnemy()
@@ -27,11 +39,5 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = new Vector3(spawnX, randomY, 0f);
 
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-    }
-
-    private void Start()
-    {
-        float randomScale = Random.Range(0.8f, 1.3f);
-        transform.localScale = Vector3.one * randomScale;
     }
 }

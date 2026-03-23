@@ -164,6 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 8
   lifeTime: 2
+  enemyHitEffectPrefab: {fileID: 3984972899297740205, guid: d3376ba929f021645a04d49736edc0cc, type: 3}
 --- !u!95 &-1904020791079585757
 Animator:
   serializedVersion: 5
