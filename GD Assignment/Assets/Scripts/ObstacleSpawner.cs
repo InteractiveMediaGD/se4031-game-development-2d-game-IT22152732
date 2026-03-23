@@ -54,15 +54,15 @@ public class ObstacleSpawner : MonoBehaviour
 
             if (randomIndex == 0)
             {
-                randomAsh = new Color(0.85f, 0.85f, 0.85f); // light gray
+                randomAsh = new Color(0.9f, 0.9f, 0.9f); // light gray
             }
             else if (randomIndex == 1)
             {
-                randomAsh = new Color(0.65f, 0.65f, 0.65f); // medium gray
+                randomAsh = new Color(0.8f, 0.8f, 0.8f); // medium gray
             }
             else
             {
-                randomAsh = new Color(0.45f, 0.45f, 0.45f); // dark gray
+                randomAsh = new Color(0.7f, 0.7f, 0.7f); // dark gray
             }
 
             topRenderer.color = randomAsh;
