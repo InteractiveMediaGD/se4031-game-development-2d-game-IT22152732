@@ -28,4 +28,10 @@ public class EnemySpawner : MonoBehaviour
 
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }
+
+    private void Start()
+    {
+        float randomScale = Random.Range(0.8f, 1.3f);
+        transform.localScale = Vector3.one * randomScale;
+    }
 }

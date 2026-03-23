@@ -157,6 +157,8 @@ MonoBehaviour:
   spawnX: 10
   spawnInterval: 2
   gapSize: 3
+  minScale: 0.85
+  maxScale: 1.2
 --- !u!4 &102887550
 Transform:
   m_ObjectHideFlags: 0
@@ -939,7 +941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95021fa0f9e369d4fb1b47d82440e97a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7643564078148710710, guid: cceab5140ba1bcd4c858fde11c9763d0, type: 3}
+  enemyPrefab: {fileID: 2193135532095338613, guid: cceab5140ba1bcd4c858fde11c9763d0, type: 3}
   spawnX: 10
   minY: -3
   maxY: 3
@@ -1336,7 +1338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26661205, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.26462603, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

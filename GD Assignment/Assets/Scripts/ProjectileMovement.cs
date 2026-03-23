@@ -17,9 +17,21 @@ public class ProjectileMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            GameManager gameManager = FindObjectOfType<GameManager>();
+            if (gameManager != null)
+            {
+                gameManager.AddScore(1);
+            }
+
+            Destroy(other.gameObject);   // destroy enemy
+            Destroy(gameObject);         // destroy projectile
+        }
+
+        else if (other.CompareTag("Obstacle"))
+        {
+            Destroy(gameObject);         // projectile disappears on obstacle hit
         }
     }
 }

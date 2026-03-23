@@ -20,11 +20,11 @@ public class HealthUI : MonoBehaviour
         // Change color based on health
         if (healthPercent > 0.6f)
         {
-            healthFill.color = new Color(0.2f, 1f, 0.2f);   // green
+            healthFill.color = new Color(0.267f, 1f, 0f, 1f);   // green
         }
         else if (healthPercent > 0.3f)
         {
-            healthFill.color = new Color(1f, 0.8f, 0.2f);   // yellow
+            healthFill.color = new Color(1f, 1f, 0f, 1f);   // yellow
         }
         else
         {

@@ -2,42 +2,47 @@ using UnityEngine;
 
 public class EnemyCollision : MonoBehaviour
 {
-    [SerializeField] private int damageAmount = 15;
-    [SerializeField] private int scoreOnProjectileHit = 2;
-    [SerializeField] private AudioClip enemyHitClip;
+    [SerializeField] private int damageAmount = 10;
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private float hitVolume = 3f;
+
+    private AudioSource audioSource;
+    private SpriteRenderer spriteRenderer;
+    private Collider2D enemyCollider;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        enemyCollider = GetComponent<Collider2D>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        GameManager gameManager = FindObjectOfType<GameManager>();
-
         if (other.CompareTag("Player"))
         {
+            GameManager gameManager = FindObjectOfType<GameManager>();
             if (gameManager != null)
             {
                 gameManager.TakeDamage(damageAmount);
             }
 
-            if (enemyHitClip != null)
+            if (hitSound != null && audioSource != null)
             {
-                AudioSource.PlayClipAtPoint(enemyHitClip, Camera.main.transform.position);
+                audioSource.PlayOneShot(hitSound, hitVolume);
             }
 
-            Destroy(gameObject);
-        }
-        else if (other.CompareTag("Projectile"))
-        {
-            if (gameManager != null)
+            if (spriteRenderer != null)
             {
-                gameManager.AddScore(scoreOnProjectileHit);
+                spriteRenderer.enabled = false;
             }
 
-            if (enemyHitClip != null)
+            if (enemyCollider != null)
             {
-                AudioSource.PlayClipAtPoint(enemyHitClip, Camera.main.transform.position);
+                enemyCollider.enabled = false;
             }
 
-            Destroy(other.gameObject);
-            Destroy(gameObject);
+            Destroy(gameObject, 0.3f);
         }
     }
 }
