@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ScoreUI scoreUI;
     [SerializeField] private GameObject gameOverText;
     [SerializeField] private AudioClip gameOverClip;
+    [SerializeField] private DamageFlashUI damageFlashUI;
+    [SerializeField] private AudioClip damageClip;
+    [SerializeField] private float damageVolume = 1.2f;
 
     private bool isGameOver = false;
 
@@ -66,6 +69,16 @@ public class GameManager : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         UpdateHealthUI();
+
+        if (damageFlashUI != null)
+        {
+            damageFlashUI.Flash();
+        }
+
+        if (damageClip != null)
+        {
+            AudioSource.PlayClipAtPoint(damageClip, Vector3.zero, damageVolume);
+        }
 
         if (currentHealth <= 0)
         {

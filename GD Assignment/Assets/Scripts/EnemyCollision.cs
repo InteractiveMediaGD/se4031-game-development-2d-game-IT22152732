@@ -3,16 +3,12 @@ using UnityEngine;
 public class EnemyCollision : MonoBehaviour
 {
     [SerializeField] private int damageAmount = 10;
-    [SerializeField] private AudioClip hitSound;
-    [SerializeField] private float hitVolume = 3f;
 
-    private AudioSource audioSource;
     private SpriteRenderer spriteRenderer;
     private Collider2D enemyCollider;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyCollider = GetComponent<Collider2D>();
     }
@@ -25,11 +21,6 @@ public class EnemyCollision : MonoBehaviour
             if (gameManager != null)
             {
                 gameManager.TakeDamage(damageAmount);
-            }
-
-            if (hitSound != null && audioSource != null)
-            {
-                audioSource.PlayOneShot(hitSound, hitVolume);
             }
 
             if (spriteRenderer != null)
