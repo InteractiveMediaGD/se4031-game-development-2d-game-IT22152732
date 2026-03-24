@@ -14,13 +14,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HealthUI healthUI;
     [SerializeField] private ScoreUI scoreUI;
     [SerializeField] private GameObject gameOverText;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject pauseButton;
     [SerializeField] private AudioClip gameOverClip;
     [SerializeField] private DamageFlashUI damageFlashUI;
     [SerializeField] private AudioClip damageClip;
     [SerializeField] private float damageVolume = 1.2f;
-    [SerializeField] private CameraShake cameraShake;
 
     private bool isGameOver = false;
+    private bool isPaused = false;
     private AudioSource audioSource;
 
     private void Start()
@@ -29,13 +31,18 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1f;
         isGameOver = false;
+        isPaused = false;
         currentHealth = maxHealth;
         currentScore = 0;
 
         if (gameOverText != null)
-        {
             gameOverText.SetActive(false);
-        }
+
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+
+        if (pauseButton != null)
+            pauseButton.SetActive(true);
 
         UpdateHealthUI();
         UpdateScoreUI();
@@ -43,19 +50,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
         {
-            TakeDamage(10);
+            TogglePause();
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (isPaused && Input.GetKeyDown(KeyCode.Q))
         {
-            HealPlayer(10);
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            AddScore(1);
+            QuitGame();
         }
 
         if (isGameOver && Input.GetKeyDown(KeyCode.R))
@@ -63,6 +65,46 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
             SceneManager.LoadScene(0);
         }
+    }
+
+    private void TogglePause()
+    {
+        if (isPaused)
+            ResumeGame();
+        else
+            PauseGame();
+    }
+
+    public void PauseGame()
+    {
+        if (isGameOver) return;
+
+        Time.timeScale = 0f;
+        isPaused = true;
+
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
+
+        if (pauseButton != null)
+            pauseButton.SetActive(false);
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+
+        if (pauseButton != null)
+            pauseButton.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Quit Game");
+        Application.Quit();
     }
 
     public void TakeDamage(int damage)
@@ -75,24 +117,13 @@ public class GameManager : MonoBehaviour
         UpdateHealthUI();
 
         if (damageFlashUI != null)
-        {
             damageFlashUI.Flash();
-        }
-
-        if (cameraShake != null)
-        {
-            cameraShake.Shake();
-        }
 
         if (damageClip != null && audioSource != null)
-        {
             audioSource.PlayOneShot(damageClip, damageVolume);
-        }
 
         if (currentHealth <= 0)
-        {
             GameOver();
-        }
     }
 
     public void HealPlayer(int healAmount)
@@ -115,17 +146,13 @@ public class GameManager : MonoBehaviour
     private void UpdateHealthUI()
     {
         if (healthUI != null)
-        {
             healthUI.UpdateHealthUI(currentHealth, maxHealth);
-        }
     }
 
     private void UpdateScoreUI()
     {
         if (scoreUI != null)
-        {
             scoreUI.UpdateScoreUI(currentScore);
-        }
     }
 
     private void GameOver()
@@ -133,16 +160,11 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
 
         if (gameOverText != null)
-        {
             gameOverText.SetActive(true);
-        }
 
         if (gameOverClip != null)
-        {
             AudioSource.PlayClipAtPoint(gameOverClip, Camera.main.transform.position);
-        }
 
-        Debug.Log("GAME OVER");
         Time.timeScale = 0f;
     }
 }
