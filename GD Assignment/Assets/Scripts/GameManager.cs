@@ -18,11 +18,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private DamageFlashUI damageFlashUI;
     [SerializeField] private AudioClip damageClip;
     [SerializeField] private float damageVolume = 1.2f;
+    [SerializeField] private CameraShake cameraShake;
 
     private bool isGameOver = false;
+    private AudioSource audioSource;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         Time.timeScale = 1f;
         isGameOver = false;
         currentHealth = maxHealth;
@@ -75,9 +79,14 @@ public class GameManager : MonoBehaviour
             damageFlashUI.Flash();
         }
 
-        if (damageClip != null)
+        if (cameraShake != null)
         {
-            AudioSource.PlayClipAtPoint(damageClip, Vector3.zero, damageVolume);
+            cameraShake.Shake();
+        }
+
+        if (damageClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(damageClip, damageVolume);
         }
 
         if (currentHealth <= 0)
