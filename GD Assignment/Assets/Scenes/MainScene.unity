@@ -815,8 +815,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  resetX: -10
-  startX: 10
+  resetX: -12
+  startX: 12
 --- !u!212 &981683725
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1193,8 +1193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  resetX: -10
-  startX: 10
+  resetX: -12
+  startX: 12
 --- !u!1 &1837409349
 GameObject:
   m_ObjectHideFlags: 0
