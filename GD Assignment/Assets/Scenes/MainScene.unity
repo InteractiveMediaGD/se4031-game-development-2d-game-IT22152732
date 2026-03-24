@@ -173,9 +173,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashImage: {fileID: 49973000}
-  flashAlpha: 0.3
+  flashAlpha: 0.25
   flashDuration: 0.15
-  fadeSpeed: 3
+  fadeSpeed: 2
 --- !u!114 &49973000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,8 +196,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -573,9 +573,9 @@ MonoBehaviour:
   pausePanel: {fileID: 1452366099}
   pauseButton: {fileID: 776501023}
   gameOverClip: {fileID: 8300000, guid: 0ded238395ab2bc448ba45f9dc019018, type: 3}
-  damageFlashUI: {fileID: 49972999}
   damageClip: {fileID: 8300000, guid: e60be1e32dd0bf7408ce527c024e7b0b, type: 3}
   damageVolume: 2
+  damageFlashUI: {fileID: 49972999}
   cameraShake: {fileID: 519420033}
 --- !u!4 &433707129
 Transform:
@@ -793,10 +793,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3d4f44e73811a4aad59ddd3bf7964a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeDuration: 0.3
-  shakeMagnitude: 0.28
-  rotationMagnitude: 3
-  dampingSpeed: 6
 --- !u!1 &545153043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,8 +1578,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279391744
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -68,8 +68,7 @@ public class GameManager : MonoBehaviour
 
         if (isGameOver && Input.GetKeyDown(KeyCode.R))
         {
-            Time.timeScale = 1f;
-            SceneManager.LoadScene(0);
+            StartCoroutine(RestartWithEffect());
         }
 
         // test key
@@ -77,6 +76,30 @@ public class GameManager : MonoBehaviour
         // {
         //     TakeDamage(10);
         // }
+    }
+
+    private System.Collections.IEnumerator RestartWithEffect()
+    {
+        // make sure time runs (important!)
+        Time.timeScale = 1f;
+
+        // ?? red flash
+        if (damageFlashUI != null)
+            damageFlashUI.StrongFlash();
+
+        // ?? shake
+        if (cameraShake != null)
+            cameraShake.StartShake(0.5f, 0.3f, 4f);
+
+        // ?? sound
+        if (damageClip != null && audioSource != null)
+            audioSource.PlayOneShot(damageClip, damageVolume);
+
+        // wait a bit so player can SEE effect
+        yield return new WaitForSeconds(0.5f);
+
+        // reload scene
+        SceneManager.LoadScene(0);
     }
 
     private void TogglePause()
@@ -128,38 +151,37 @@ public class GameManager : MonoBehaviour
 
         UpdateHealthUI();
 
-        // Always show flash on any damage
+        // normal hit feedback
         if (damageFlashUI != null)
             damageFlashUI.Flash();
 
-        // Always play damage sound on any damage
         if (damageClip != null && audioSource != null)
             audioSource.PlayOneShot(damageClip, damageVolume);
 
-        // Normal hit shake
-        if (currentHealth > 0)
+        if (currentHealth <= 0)
         {
-            if (cameraShake != null)
-                cameraShake.StartShake(0.22f, 0.28f, 2.5f);
-        }
-        else
-        {
-            // Death hit: stronger flash + stronger shake + game over sound
             isGameOver = true;
 
+            // ?? STRONG RED FLASH
             if (damageFlashUI != null)
-                damageFlashUI.Flash();
+                damageFlashUI.StrongFlash();
 
+            // ?? sound
+            if (damageClip != null && audioSource != null)
+                audioSource.PlayOneShot(damageClip, damageVolume);
+
+            // ?? BIG SHAKE
             if (cameraShake != null)
-                cameraShake.StartShake(0.55f, 0.40f, 5f);
+                cameraShake.StartShake(0.7f, 0.4f, 5f);
 
+            // ?? UI
             if (gameOverText != null)
                 gameOverText.SetActive(true);
 
             if (gameOverClip != null)
                 AudioSource.PlayClipAtPoint(gameOverClip, Camera.main.transform.position);
 
-            StartCoroutine(FinalGameOverFreeze());
+            StartCoroutine(GameOverStop());
         }
     }
 
@@ -196,5 +218,10 @@ public class GameManager : MonoBehaviour
     {
         if (scoreUI != null)
             scoreUI.UpdateScoreUI(currentScore);
+    }
+    private System.Collections.IEnumerator GameOverStop()
+    {
+        yield return new WaitForSecondsRealtime(0.7f);
+        Time.timeScale = 0f;
     }
 }

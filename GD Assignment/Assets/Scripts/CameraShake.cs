@@ -3,10 +3,6 @@ using System.Collections;
 
 public class CameraShake : MonoBehaviour
 {
-    [SerializeField] private float shakeDuration = 0.2f;
-    [SerializeField] private float shakeMagnitude = 0.22f;
-    [SerializeField] private float rotationMagnitude = 2.5f;
-
     private Vector3 originalPosition;
     private Quaternion originalRotation;
     private Coroutine currentShake;
