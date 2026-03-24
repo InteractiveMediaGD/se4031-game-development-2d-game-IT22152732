@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,10 +17,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverText;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject pauseButton;
+
+    [Header("Audio")]
     [SerializeField] private AudioClip gameOverClip;
-    [SerializeField] private DamageFlashUI damageFlashUI;
     [SerializeField] private AudioClip damageClip;
-    [SerializeField] private float damageVolume = 1.2f;
+    [SerializeField] private float damageVolume = 1.5f;
+
+    [Header("Damage Feedback")]
+    [SerializeField] private DamageFlashUI damageFlashUI;
+    [SerializeField] private CameraShake cameraShake;
 
     private bool isGameOver = false;
     private bool isPaused = false;
@@ -65,6 +71,12 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
             SceneManager.LoadScene(0);
         }
+
+        // test key
+        // if (Input.GetKeyDown(KeyCode.H))
+        // {
+        //     TakeDamage(10);
+        // }
     }
 
     private void TogglePause()
@@ -116,14 +128,45 @@ public class GameManager : MonoBehaviour
 
         UpdateHealthUI();
 
+        // Always show flash on any damage
         if (damageFlashUI != null)
             damageFlashUI.Flash();
 
+        // Always play damage sound on any damage
         if (damageClip != null && audioSource != null)
             audioSource.PlayOneShot(damageClip, damageVolume);
 
-        if (currentHealth <= 0)
-            GameOver();
+        // Normal hit shake
+        if (currentHealth > 0)
+        {
+            if (cameraShake != null)
+                cameraShake.StartShake(0.22f, 0.28f, 2.5f);
+        }
+        else
+        {
+            // Death hit: stronger flash + stronger shake + game over sound
+            isGameOver = true;
+
+            if (damageFlashUI != null)
+                damageFlashUI.Flash();
+
+            if (cameraShake != null)
+                cameraShake.StartShake(0.55f, 0.40f, 5f);
+
+            if (gameOverText != null)
+                gameOverText.SetActive(true);
+
+            if (gameOverClip != null)
+                AudioSource.PlayClipAtPoint(gameOverClip, Camera.main.transform.position);
+
+            StartCoroutine(FinalGameOverFreeze());
+        }
+    }
+
+    private IEnumerator FinalGameOverFreeze()
+    {
+        yield return new WaitForSecondsRealtime(0.55f);
+        Time.timeScale = 0f;
     }
 
     public void HealPlayer(int healAmount)
@@ -153,18 +196,5 @@ public class GameManager : MonoBehaviour
     {
         if (scoreUI != null)
             scoreUI.UpdateScoreUI(currentScore);
-    }
-
-    private void GameOver()
-    {
-        isGameOver = true;
-
-        if (gameOverText != null)
-            gameOverText.SetActive(true);
-
-        if (gameOverClip != null)
-            AudioSource.PlayClipAtPoint(gameOverClip, Camera.main.transform.position);
-
-        Time.timeScale = 0f;
     }
 }
