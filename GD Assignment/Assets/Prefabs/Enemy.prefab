@@ -173,8 +173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1070dc8f4534edb41bf227be91626e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  destroyX: -8
+  minSpeed: 2
+  maxSpeed: 5
+  destroyX: -6
 --- !u!114 &-2160522319853121292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,8 +189,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 15
-  hitSound: {fileID: 8300000, guid: e60be1e32dd0bf7408ce527c024e7b0b, type: 3}
-  hitVolume: 1
 --- !u!82 &-7590435683360521229
 AudioSource:
   m_ObjectHideFlags: 0
