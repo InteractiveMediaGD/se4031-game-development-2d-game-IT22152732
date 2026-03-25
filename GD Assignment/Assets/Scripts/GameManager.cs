@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
             TogglePause();
         }
 
-        if (isPaused && Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             QuitGame();
         }
